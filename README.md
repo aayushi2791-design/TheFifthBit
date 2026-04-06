@@ -1,164 +1,203 @@
-# HireReady — AI-Powered Interview Preparation Platform
+# negotiator
 
-> "From Practice to Placement" — The Fifth Bit Hackathon 2026
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![Node.js Version][node-version-image]][node-version-url]
+[![Build Status][github-actions-ci-image]][github-actions-ci-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 
----
+An HTTP content negotiator for Node.js
 
-## 🚀 Tech Stack
+## Installation
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | HTML5, CSS3 (CSS Variables), Vanilla JS |
-| Backend | Node.js + Express.js |
-| Database | MongoDB + Mongoose |
-| AI Engine | Claude API (Anthropic) — claude-sonnet-4-20250514 |
-| Auth | JWT + bcryptjs + HttpOnly Cookies |
-| Security | Helmet, Rate Limiting, Input Validation, Account Lockout |
-
----
-
-## 📁 Project Structure
-
-```
-hireready-full/
-├── backend/
-│   ├── models/
-│   │   ├── User.js          # User model with security features
-│   │   └── Session.js       # Interview session model
-│   ├── routes/
-│   │   ├── auth.js          # Register, login, logout, /me
-│   │   ├── users.js         # Profile, settings, resume, stats
-│   │   ├── interview.js     # Start, message, end, code review, anti-cheat
-│   │   ├── evaluation.js    # Fetch evaluations
-│   │   ├── leaderboard.js   # Rankings with filters
-│   │   └── resources.js     # Curated learning resources
-│   ├── middleware/
-│   │   └── auth.js          # JWT protect middleware
-│   ├── .env.example         # Environment variables template
-│   ├── package.json
-│   └── server.js            # Main Express server
-└── frontend/
-    ├── css/
-    │   └── main.css         # Full design system, dark + light mode
-    ├── js/
-    │   └── api.js           # API client, auth manager, theme, toasts
-    ├── pages/
-    │   ├── login.html
-    │   ├── register.html
-    │   ├── dashboard.html
-    │   ├── interview.html
-    │   ├── evaluation.html
-    │   ├── leaderboard.html
-    │   ├── resources.html
-    │   └── settings.html
-    └── index.html           # Landing page
+```sh
+$ npm install negotiator
 ```
 
----
+## API
 
-## ⚙️ Setup Instructions
-
-### Prerequisites
-- Node.js 18+
-- MongoDB (local or MongoDB Atlas)
-- Anthropic API Key (for AI features)
-
-### 1. Install backend dependencies
-
-```bash
-cd backend
-npm install
+```js
+var Negotiator = require('negotiator')
 ```
 
-### 2. Configure environment variables
+### Accept Negotiation
 
-```bash
-cp .env.example .env
+```js
+availableMediaTypes = ['text/html', 'text/plain', 'application/json']
+
+// The negotiator constructor receives a request object
+negotiator = new Negotiator(request)
+
+// Let's say Accept header is 'text/html, application/*;q=0.2, image/jpeg;q=0.8'
+
+negotiator.mediaTypes()
+// -> ['text/html', 'image/jpeg', 'application/*']
+
+negotiator.mediaTypes(availableMediaTypes)
+// -> ['text/html', 'application/json']
+
+negotiator.mediaType(availableMediaTypes)
+// -> 'text/html'
 ```
 
-Edit `.env` and fill in:
+You can check a working example at `examples/accept.js`.
+
+#### Methods
+
+##### mediaType()
+
+Returns the most preferred media type from the client.
+
+##### mediaType(availableMediaType)
+
+Returns the most preferred media type from a list of available media types.
+
+##### mediaTypes()
+
+Returns an array of preferred media types ordered by the client preference.
+
+##### mediaTypes(availableMediaTypes)
+
+Returns an array of preferred media types ordered by priority from a list of
+available media types.
+
+### Accept-Language Negotiation
+
+```js
+negotiator = new Negotiator(request)
+
+availableLanguages = ['en', 'es', 'fr']
+
+// Let's say Accept-Language header is 'en;q=0.8, es, pt'
+
+negotiator.languages()
+// -> ['es', 'pt', 'en']
+
+negotiator.languages(availableLanguages)
+// -> ['es', 'en']
+
+language = negotiator.language(availableLanguages)
+// -> 'es'
 ```
-MONGODB_URI=mongodb://localhost:27017/hireready
-JWT_SECRET=your_very_long_random_secret_here
-ANTHROPIC_API_KEY=sk-ant-xxxx...
+
+You can check a working example at `examples/language.js`.
+
+#### Methods
+
+##### language()
+
+Returns the most preferred language from the client.
+
+##### language(availableLanguages)
+
+Returns the most preferred language from a list of available languages.
+
+##### languages()
+
+Returns an array of preferred languages ordered by the client preference.
+
+##### languages(availableLanguages)
+
+Returns an array of preferred languages ordered by priority from a list of
+available languages.
+
+### Accept-Charset Negotiation
+
+```js
+availableCharsets = ['utf-8', 'iso-8859-1', 'iso-8859-5']
+
+negotiator = new Negotiator(request)
+
+// Let's say Accept-Charset header is 'utf-8, iso-8859-1;q=0.8, utf-7;q=0.2'
+
+negotiator.charsets()
+// -> ['utf-8', 'iso-8859-1', 'utf-7']
+
+negotiator.charsets(availableCharsets)
+// -> ['utf-8', 'iso-8859-1']
+
+negotiator.charset(availableCharsets)
+// -> 'utf-8'
 ```
 
-### 3. Start the server
+You can check a working example at `examples/charset.js`.
 
-```bash
-# Development
-npm run dev
+#### Methods
 
-# Production
-npm start
+##### charset()
+
+Returns the most preferred charset from the client.
+
+##### charset(availableCharsets)
+
+Returns the most preferred charset from a list of available charsets.
+
+##### charsets()
+
+Returns an array of preferred charsets ordered by the client preference.
+
+##### charsets(availableCharsets)
+
+Returns an array of preferred charsets ordered by priority from a list of
+available charsets.
+
+### Accept-Encoding Negotiation
+
+```js
+availableEncodings = ['identity', 'gzip']
+
+negotiator = new Negotiator(request)
+
+// Let's say Accept-Encoding header is 'gzip, compress;q=0.2, identity;q=0.5'
+
+negotiator.encodings()
+// -> ['gzip', 'identity', 'compress']
+
+negotiator.encodings(availableEncodings)
+// -> ['gzip', 'identity']
+
+negotiator.encoding(availableEncodings)
+// -> 'gzip'
 ```
 
-The server runs on **http://localhost:5000** and serves the frontend automatically.
+You can check a working example at `examples/encoding.js`.
 
-### 4. Open in browser
+#### Methods
 
-Visit: **http://localhost:5000**
+##### encoding()
 
----
+Returns the most preferred encoding from the client.
 
-## 🔑 Features Implemented
+##### encoding(availableEncodings)
 
-### From PPT Slides
-- ✅ AI-Based Mock Interview Sessions (Claude API)
-- ✅ Role-Based Interview Simulation (SDE, Data Scientist, DevOps, PM)
-- ✅ Technical + HR Rounds
-- ✅ Adaptive Follow-up Questions (context-aware AI)
-- ✅ Real-time AI Feedback & Scoring
-- ✅ Resume Upload & Resume-Based Questions
-- ✅ Difficulty Modes (Easy / Medium / Hard)
-- ✅ Pressure Mode (AI interruptions, time pressure)
-- ✅ Coding Editor (Monaco-style) with AI Code Review
-- ✅ Anti-Cheat Detection (tab switching, paste monitoring)
-- ✅ AI Evaluation System (technical, communication, confidence)
-- ✅ Filler Word Detection (um, uh, like, so, etc.)
-- ✅ Confidence Analysis + Sentiment Analysis
-- ✅ Weakness Identification + Role Readiness Score
-- ✅ Improvement Roadmap (personalized learning path)
-- ✅ Leaderboard with Role-based Rankings
-- ✅ Daily Streak System
-- ✅ Curated Resources (categorized by role, topic, difficulty)
-- ✅ Performance Tracking over sessions
+Returns the most preferred encoding from a list of available encodings.
 
-### UI/UX
-- ✅ Dark Mode (default, matching the slides)
-- ✅ Light Mode (same color palette as attached screenshots)
-- ✅ Smooth theme switching
-- ✅ Responsive design (mobile-friendly)
-- ✅ Animated stats, toasts, modals
+##### encodings()
 
-### Security
-- ✅ Password hashing (bcrypt, 12 rounds)
-- ✅ JWT authentication (7-day expiry)
-- ✅ HTTP-only cookies
-- ✅ Account lockout (5 failed attempts → 15 min lock)
-- ✅ Rate limiting (general: 200/15min, auth: 20/15min, AI: 60/min)
-- ✅ Input validation (express-validator)
-- ✅ Helmet security headers
-- ✅ CORS protection
-- ✅ SQL/NoSQL injection protection (Mongoose sanitization)
-- ✅ Passwords never returned in API responses (select: false)
+Returns an array of preferred encodings ordered by the client preference.
 
----
+##### encodings(availableEncodings)
 
-## 🧑‍💻 Team — The Fifth Bit
+Returns an array of preferred encodings ordered by priority from a list of
+available encodings.
 
-- Khyati Singh (25BCE11336)
-- Aayushi (25BCE10206)
-- Aditya Singh (25BCE1133)
-- Sayan Modal (25BAI11532)
-- Yashraj (25BAI11556)
+## See Also
 
----
+The [accepts](https://npmjs.org/package/accepts#readme) module builds on
+this module and provides an alternative interface, mime type validation,
+and more.
 
-## 🔮 Future Scope (from slides)
+## License
 
-- Company-specific interview modes
-- Voice & emotion detection AI
-- Recruiter dashboard & analytics
-- Referral system for top performers
-- Mobile app (React Native)
+[MIT](LICENSE)
+
+[npm-image]: https://img.shields.io/npm/v/negotiator.svg
+[npm-url]: https://npmjs.org/package/negotiator
+[node-version-image]: https://img.shields.io/node/v/negotiator.svg
+[node-version-url]: https://nodejs.org/en/download/
+[coveralls-image]: https://img.shields.io/coveralls/jshttp/negotiator/master.svg
+[coveralls-url]: https://coveralls.io/r/jshttp/negotiator?branch=master
+[downloads-image]: https://img.shields.io/npm/dm/negotiator.svg
+[downloads-url]: https://npmjs.org/package/negotiator
+[github-actions-ci-image]: https://img.shields.io/github/workflow/status/jshttp/negotiator/ci/master?label=ci
+[github-actions-ci-url]: https://github.com/jshttp/negotiator/actions/workflows/ci.yml
