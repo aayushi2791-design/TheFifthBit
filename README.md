@@ -11,7 +11,7 @@
 | Frontend | HTML5, CSS3 (CSS Variables), Vanilla JS |
 | Backend | Node.js + Express.js |
 | Database | MongoDB + Mongoose |
-| AI Engine | Claude API (Anthropic) — claude-sonnet-4-20250514 |
+| AI Engine | Gemini API |
 | Auth | JWT + bcryptjs + HttpOnly Cookies |
 | Security | Helmet, Rate Limiting, Input Validation, Account Lockout |
 
