@@ -1,10 +1,10 @@
 # HireReady — AI-Powered Interview Preparation Platform
 
-> "From Practice to Placement" — The Fifth Bit Hackathon 2026
+> "From Practice to Placement" — 
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -17,7 +17,7 @@
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 hireready-full/
@@ -56,7 +56,7 @@ hireready-full/
 
 ---
 
-## ⚙️ Setup Instructions
+##  Setup Instructions
 
 ### Prerequisites
 - Node.js 18+
@@ -80,7 +80,7 @@ Edit `.env` and fill in:
 ```
 MONGODB_URI=mongodb://localhost:27017/hireready
 JWT_SECRET=your_very_long_random_secret_here
-ANTHROPIC_API_KEY=sk-ant-xxxx...
+GEMINI_API_KEY=sk-ant-xxxx...
 ```
 
 ### 3. Start the server
@@ -103,10 +103,10 @@ Deployed link: **https://thefifthbit.onrender.com**
 
 ---
 
-## 🔑 Features Implemented
+##  Features Implemented
 
-### From PPT Slides
-- ✅ AI-Based Mock Interview Sessions (Claude API)
+### 
+- ✅ AI-Based Mock Interview Sessions (Gemini API)
 - ✅ Role-Based Interview Simulation (SDE, Data Scientist, DevOps, PM)
 - ✅ Technical + HR Rounds
 - ✅ Adaptive Follow-up Questions (context-aware AI)
@@ -147,15 +147,17 @@ Deployed link: **https://thefifthbit.onrender.com**
 
 ---
 
-## 🧑‍💻 Team — 
+##  Team — 
 
 - Khyati Singh (25BCE11336)
 - Aayushi (25BCE10206)
 - Yashraj (25BAI11556)
+- Aryan Kumar (25BCE11350)
+- Aishwary Shrivastava (25BCE10306)
 
 ---
 
-## 🔮 Future Scope (from slides)
+##  Future Scope (from slides)
 
 - Company-specific interview modes
 - Voice & emotion detection AI
