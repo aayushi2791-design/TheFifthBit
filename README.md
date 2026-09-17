@@ -61,7 +61,7 @@ hireready-full/
 ### Prerequisites
 - Node.js 18+
 - MongoDB (local or MongoDB Atlas)
-- Anthropic API Key (for AI features)
+- Gemini API Key (for AI features)
 
 ### 1. Install backend dependencies
 
@@ -98,6 +98,8 @@ The server runs on **http://localhost:5000** and serves the frontend automatical
 ### 4. Open in browser
 
 Visit: **http://localhost:5000**
+
+Deployed link: **https://thefifthbit.onrender.com**
 
 ---
 
