@@ -80,7 +80,7 @@ Edit `.env` and fill in:
 ```
 MONGODB_URI=mongodb://localhost:27017/hireready
 JWT_SECRET=your_very_long_random_secret_here
-GEMINI_API_KEY=sk-ant-xxxx...
+GEMINI_API_KEY=gemini_api_key...
 ```
 
 ### 3. Start the server
